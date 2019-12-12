@@ -1,0 +1,61 @@
+CREATE TABLE IF NOT EXISTS Guest(
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName varchar(20) NOT NULL,
+    LastName varchar(20) NOT NULL,
+    Country varchar(20), 
+    Address varchar(30),
+    City varchar (20),
+    Email varchar(30) NOT NULL
+    
+);
+
+############################
+CREATE TABLE IF NOT EXISTS Reservation(
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    GuestId INT NOT NULL,
+    RoomId INT,
+    StartDate DATETIME,
+    EndDate DATETIME,
+   
+    FOREIGN KEY (GuestId) REFERENCES Guest(Id)
+);
+ALTER table Reservation ADD foreign key (RoomId) REFERENCES Room(Id) ON DELETE CASCADE;
+
+#############################
+CREATE TABLE IF NOT EXISTS Room(
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    RoomTypeId INT,
+    HotelId INT,
+    Status varchar (20)
+    
+);
+ALTER table Room ADD foreign key (RoomTypeId) REFERENCES RoomType(Id);
+
+###############################
+CREATE TABLE IF NOT EXISTS Hotel(
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Name varchar(20) NOT NULL,
+   Location varchar(25) NOT NULL
+    
+);
+
+################################
+CREATE TABLE IF NOT EXISTS Review(
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    HotelId INT NOT NULL,
+    Rating INT,
+    Comment varchar(100),
+    FOREIGN KEY (HotelId) REFERENCES Room(Id)
+
+    
+);
+
+########################################
+CREATE TABLE IF NOT EXISTS Payment(
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    ReservationId INT NOT NULL,
+    Amount INT ,
+    FOREIGN KEY (ReservationId) REFERENCES Reservation(Id) ON DELETE CASCADE
+
+    
+);
